@@ -1,0 +1,48 @@
+package lessons;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class UniEntrSys {
+
+	public static void main(String[] args) {
+
+		// Universiteler goreceli olarak sabit! oldugundan isimleri ve codlari string
+		// olarak girildi.
+
+		String university[][] = { { "Oxford University", "OXF" }, { "Cambridge University", "CAM" },
+				{ "London University", "LON" } };
+
+		int univCount = university.length;
+
+		// Universite kapasiteleri degisken oldugundan kullanicidan alindi.
+
+		int[] univCapacity = new int[univCount];
+
+		Scanner in = new Scanner(System.in);
+
+		for (int i = 0; i < univCount; i++) {
+			System.out.println("Please enter " + university[i][0] + " capacity: ");
+
+			try {
+				int enteredUnivCap = in.nextInt();
+				if (enteredUnivCap > 0) {
+					univCapacity[i] = enteredUnivCap;
+				} else {
+					throw new ArithmeticException();
+				}
+			}
+
+			catch (InputMismatchException | ArithmeticException ime) {
+				System.out.println("Not a Positive Integer");
+				in.nextLine();
+				i--;
+			}
+
+		}
+
+		// System.out.println(university[0][0]);
+		in.close();
+	}
+
+}

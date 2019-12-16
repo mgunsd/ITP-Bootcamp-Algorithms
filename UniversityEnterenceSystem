@@ -35,12 +35,47 @@ public class UniEntrSys {
 
 			catch (InputMismatchException | ArithmeticException ime) {
 				System.out.println("Not a Positive Integer");
-				in.nextLine();
+				//in.nextLine();
 				i--;
 			}
 
 		}
-
+//Students-----------------------------------------------------------------------------------------
+		in.nextLine();
+		String[][] studentsList;
+				
+		ask :
+		
+		System.out.println("Enter students information now?: 'y' to accept; or 'n' to quit:");
+		
+		 while(in.hasNextLine())
+		    {
+		String prompt = in.nextLine().trim();
+		
+		if(prompt.equalsIgnoreCase("y")) {
+		    System.out.println("Lets begin!");
+		    
+		   while(in.hasNextLine()) {
+			   
+			   System.out.println("Student name :");
+			   
+			   
+			   
+			   
+			   
+		   }
+		    
+		    
+		    
+		} else if(prompt.equalsIgnoreCase("n")) {
+		    System.out.println("Thank you, Maybe next time");
+		    System.exit(0);
+		} else { 
+		System.out.println("Invalid character");
+		  
+		}
+		
+		    }
 		// System.out.println(university[0][0]);
 		in.close();
 	}

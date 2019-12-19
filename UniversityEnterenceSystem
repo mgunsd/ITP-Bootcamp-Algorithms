@@ -6,55 +6,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class UniEntrSys {
-	
-	class Student {
-		// fields (variables in a class)
-		private int stuId;
-		private String firstName;
-		private String lastName;
 
-		// Constructor method, Declaration of Class
+	public static void main(String[] args) {
 
-		public Student() {
-		}
-
-		// Setters and getters methods
-
-		public void setSId(int sId) {
-			this.stuId = sId;
-		}
-
-		public int getSId() {
-			return stuId;
-		}
-
-		public void setFnm(String fName) {
-			this.firstName = fName;
-		}
-
-		public String getFnm() {
-			return firstName;
-		}
-
-		public void setLnm(String lName) {
-			this.lastName = lName;
-		}
-
-		public String getLnm() {
-			return lastName;
-		}
-
-	}
-	
-		public static void main(String[] args) {
-		
-		System.out.println("\r\n" + 
-				"   ____ __          ___   __               \r\n" + 
-				"  / __// /_ __ __  / _ \\ / /___ _ ____ ___ \r\n" + 
-				" _\\ \\ / __// // / / ___// // _ `// __// -_)\r\n" + 
-				"/___/ \\__/ \\_,_/ /_/   /_/ \\_,_/ \\__/ \\__/ \r\n" + 
-				"                                           \r\n" + 
-				"");
+		System.out.println("\r\n" + "   ____ __          ___   __               \r\n"
+				+ "  / __// /_ __ __  / _ \\ / /___ _ ____ ___ \r\n"
+				+ " _\\ \\ / __// // / / ___// // _ `// __// -_)\r\n"
+				+ "/___/ \\__/ \\_,_/ /_/   /_/ \\_,_/ \\__/ \\__/ \r\n"
+				+ "                                           \r\n" + "");
 //Universities-----------------------------------------------------------------------------------------
 		String university[][] = { { "Oxford University", "OXF" }, { "Cambridge University", "CAM" },
 				{ "London University", "LON" } };
@@ -79,24 +38,23 @@ public class UniEntrSys {
 
 			catch (InputMismatchException | ArithmeticException ime) {
 				System.out.println("Not a Positive Integer");
-				
+
 				i--;
 			}
 		}
 //Prompt-----------------------------------------------------------------------------------------
 		in.nextLine();
-		
 
 		System.out.println("Enter students information now?: 'y' to accept; or 'n' to quit:");
 
 		while (in.hasNextLine()) {
-			
+
 			String prompt = in.nextLine().trim();
 
 			if (prompt.equalsIgnoreCase("y")) {
 //Students-----------------------------------------------------------------------------------------				
 				System.out.println("===Now Input Students Details===");
-				
+
 				List<Student> students = new ArrayList<Student>();
 
 				int i = 0;
@@ -104,21 +62,30 @@ public class UniEntrSys {
 
 				do {
 					try {
-					
-					Student student = new UniEntrSys().new Student(); // since I have created a nested class i need to call
-																		// outer class fir
-					student.setSId(i + 1);
 
-					System.out.println("Enter " + "\"First Name\""+ " for Student iD: "+ student.getSId() );
-					student.setFnm(in.nextLine());
-					System.out.println("Enter " + "\"Last Name\""+ " for Student iD: "+ student.getSId() );
-					student.setLnm(in.nextLine().toUpperCase());
+						Student student = new UniEntrSys().new Student(); // since I have created a nested class i need
+																			// to call
+																			// outer class fir
+						student.setSId(i + 1);
 
-					students.add(student);
-					} catch(InputMismatchException ime) {
-						
+						System.out.println("Enter " + "\"First Name\"" + " for Student iD: " + student.getSId());
+						student.setFnm(in.nextLine());
+						System.out.println("Enter " + "\"Last Name\"" + " for Student iD: " + student.getSId());
+						student.setLnm(in.nextLine().toUpperCase());
+						System.out.println(
+								"Enter " + "\"Quantitative Answers\"" + " for Student iD: " + student.getSId());
+						student.setQtt(in.nextLine().toUpperCase());
+						System.out.println("Enter " + "\"Verbal Answers\"" + " for Student iD: " + student.getSId());
+						student.setVrb(in.nextLine().toUpperCase());
+						// System.out.println("Enter " + "\"University Preferences\""+ " for Student iD:
+						// "+ student.getSId() );
+						// student.setUniPref(in.nextLine().toUpperCase());
+
+						students.add(student);
+					} catch (InputMismatchException ime) {
+
 					}
-			
+
 					System.out.print("Add more Student?(y/n)");
 					String askNew = in.nextLine();
 					newRecord = (askNew.toLowerCase().equals("y")) ? true : false;
@@ -129,10 +96,15 @@ public class UniEntrSys {
 				System.out.println("===Entered Students Details===");
 				students.forEach(user -> {
 					System.out.println(
-							"Student Id: " + user.getSId() + 
-							"   Full Name : " + user.getFnm() +" "+ user.getLnm() );
+							"Student Id: " + user.getSId() +
+							"   Full Name : " + user.getFnm() +
+							" " + user.getLnm() +
+							" Quant. Ans: " + user.getQtt() +
+							" Verb. Ans: " + user.getVrb() 
+							
+							);
 				});
-				
+
 			} else if (prompt.equalsIgnoreCase("n")) {
 				System.out.println("Thank you, Maybe next time");
 				System.exit(0);
@@ -142,8 +114,74 @@ public class UniEntrSys {
 			}
 
 		}
-		
+
 		in.close();
+	}
+
+	class Student {
+		// fields (variables in a class)
+		private int stuId;
+		private String firstName;
+		private String lastName;
+		private String quantitative;
+		private String verbal;
+		private String[] uniPref;
+
+		// Constructor method, Declaration of Class
+
+		public Student() {
+		}
+
+		// Setters and getters methods
+
+		public int getSId() {
+			return stuId;
+		}
+
+		public void setSId(int sId) {
+			this.stuId = sId;
+		}
+
+		public String getFnm() {
+			return firstName;
+		}
+
+		public void setFnm(String fName) {
+			this.firstName = fName;
+		}
+
+		public String getLnm() {
+			return lastName;
+		}
+
+		public void setLnm(String lName) {
+			this.lastName = lName;
+		}
+
+		public String getQtt() {
+			return quantitative;
+		}
+
+		public void setQtt(String qtt) {
+			quantitative = qtt;
+		}
+
+		public String getVrb() {
+			return verbal;
+		}
+
+		public void setVrb(String vrb) {
+			verbal = vrb;
+		}
+
+		public String[] getUniPref() {
+			return uniPref;
+		}
+
+		public void setUniPref(String[] uniPref) {
+			this.uniPref = uniPref;
+		}
+
 	}
 
 }

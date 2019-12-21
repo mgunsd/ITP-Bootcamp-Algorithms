@@ -5,16 +5,17 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class UniEntrSys {
+public class UniEntrSys2 {
 
 	public static void main(String[] args) {
 
-		System.out.println("\r\n" + "   ____ __          ___   __               \r\n"
+		System.out.println(
+		 "\r\n" + "   ____ __          ___   __               \r\n"
 				+ "  / __// /_ __ __  / _ \\ / /___ _ ____ ___ \r\n"
 				+ " _\\ \\ / __// // / / ___// // _ `// __// -_)\r\n"
 				+ "/___/ \\__/ \\_,_/ /_/   /_/ \\_,_/ \\__/ \\__/ \r\n"
 				+ "                                           \r\n" + "");
-//Universities-----------------------------------------------------------------------------------------
+//Universities--------------------------------------------------------------------------------------------
 		String university[][] = { { "Oxford University", "OXF" }, { "Cambridge University", "CAM" },
 				{ "London University", "LON" } };
 
@@ -25,7 +26,7 @@ public class UniEntrSys {
 		Scanner in = new Scanner(System.in);
 
 		for (int i = 0; i < univCount; i++) {
-			System.out.println("Please enter " + university[i][0] + " capacity: ");
+			System.out.println("Please enter " +"\""+university[i][0]+"\"" + " capacity: ");
 
 			try {
 				int enteredUnivCap = in.nextInt();
@@ -37,116 +38,145 @@ public class UniEntrSys {
 			}
 
 			catch (InputMismatchException | ArithmeticException ime) {
-				System.out.println("Not a Positive Integer");
+				System.out.println("Not a valid Capacity ! Try Again. ");
 				in.nextLine();
 				i--;
 			}
 		}
-//Prompt-----------------------------------------------------------------------------------------
+		
+//Students-----------------------------------------------------------------------------------------			
 		in.nextLine();
+		
 
-		System.out.println("Enter students information now?: 'y' to accept; or 'n' to quit:");
-
-		while (in.hasNextLine()) {
-
-			String prompt = in.nextLine().trim();
-
-			if (prompt.equalsIgnoreCase("y")) {
-//Students-----------------------------------------------------------------------------------------				
-				System.out.println("===Now Input Students Details===");
-
-				List<Student> students = new ArrayList<Student>();
-
-				int i = 0;
-				boolean newRecord = true;
-
-				do {
-					try {
-
-						Student student = new UniEntrSys().new Student(); // since I have created a nested class i need
-																			// to call
-																			// outer class fir
-						student.setSId(i + 1);
-
-						System.out.println("Enter " + "\"First Name\"" + " for Student iD: " + student.getSId());
-						student.setFnm(in.nextLine());
-						System.out.println("Enter " + "\"Last Name\"" + " for Student iD: " + student.getSId());
-						student.setLnm(in.nextLine().toUpperCase());
-						System.out.println("Enter " + "\"Quantitative Answers\"" + " for Student iD: " + student.getSId());
-						student.setQtt(in.nextLine().toUpperCase());
-						System.out.println("Enter " + "\"Verbal Answers\"" + " for Student iD: " + student.getSId());
-						student.setVrb(in.nextLine().toUpperCase());
-						System.out.println("Enter " + "\"University Preferences\""+ " for Student iD:"+ student.getSId() );
-						System.out.println("-please use 3 Letter University Codes");
-						System.out.println("----------------------");
-						for (int j = 0; j < univCount; j++) {
-							System.out.println(university[j][0]+" : " + university[j][1]);
-							System.out.println("----------------------");
-						}
-						
-						
-							String[] uniPrefs = new String[3];
-							System.out.println("1st: ");
-							uniPrefs[0] = in.nextLine().toUpperCase();
-							System.out.println("2st: ");
-							uniPrefs[1] = in.nextLine().toUpperCase();
-							System.out.println("3st: ");
-							uniPrefs[2] = in.nextLine().toUpperCase();
-
-				        student.setUniPref(uniPrefs);
-
-						students.add(student);
-					} catch (InputMismatchException ime) {
-
-					}
-
-					System.out.print("Add more Student?(y/n)");
-					String askNew = in.nextLine();
-					newRecord = (askNew.toLowerCase().equals("y")) ? true : false;
-
-					i++;
-
-				} while (newRecord == true);
+//		System.out.println("Enter quantitative answers key");
+//		String qttk = in.nextLine().toUpperCase();
+//		System.out.println("Enter verbal answers key ");
+//		String vrbk = in.nextLine().toUpperCase();
+		
+		String qttk = "ABCDBAEDDACDBEDCABDEDACADEDBAB";
+		String vrbk = "BCDABCAEBBADCCAEBADCBADBCADBBE";	
+		String AnsKey = qttk.concat(vrbk);
 				
-				System.out.println("===Entered Students Details===");
-				
-//				for (int j = 0; j <uniPrefs.length; ++j) {
-//		            System.out.println(uniPrefs[j]);
-//		        }
-				
-				students.forEach(user -> {
-					System.out.println(
-							"Student Id: " + user.getSId() +
-							"   Full Name : " + user.getFnm() +
-							" " + user.getLnm() +
-							" Quant. Ans: " + user.getQtt() +
-							" Verb. Ans: " + user.getVrb() +
-							" Uni. Pref.: " + user.getUniPref()					// Fix array print
-							);
-				});
+		System.out.println("\n\n----------------------------------------");
+		System.out.println("\tInput Students Details");
+		System.out.println("----------------------------------------");
+		List<Student> students = new ArrayList<Student>();
+		int i = 0;
+		boolean newRecord = true;
 
-			} else if (prompt.equalsIgnoreCase("n")) {
-				System.out.println("Thank you, Maybe next time");
-				System.exit(0);
-			} else {
-				System.out.println("Invalid character");
+		do {
+			try {
+
+				Student student = new UniEntrSys2().new Student(); 	
+				student.setSId(i + 1);
+
+				System.out.println("Enter " + "\"First Name\"" + " for Student iD: " + student.getSId());
+				student.setFnm(in.nextLine());
+				System.out.println("Enter " + "\"Last Name\"" + " for Student iD: " + student.getSId());
+				student.setLnm(in.nextLine().toUpperCase());
+				
+				System.out.println("Enter " + "\"Quantitative Answers\"" + " for Student iD: " + student.getSId());
+				String qtt = in.nextLine().toUpperCase();
+				System.out.println("Enter " + "\"Verbal Answers\"" + " for Student iD: " + student.getSId());
+				String vrb = in.nextLine().toUpperCase();
+				student.setAns(qtt.concat(vrb));
+				
+				System.out.println("University choices" + " for Student iD:" + student.getSId());
+				System.out.println("(Enter 3 Letter University Codes)");
+				//System.out.println("-------------------------------------");
+				System.out.println("\nUniversity Name  \t|\tCode");
+				System.out.println("=====================================");
+				for (int j = 0; j < univCount; j++) {
+					System.out.println(university[j][0] + " : " + "\t|\t"+university[j][1]);
+					System.out.println("-------------------------------------");
+				}
+
+				String[] uniPrefs = new String[3];
+				System.out.println("1st Choise: "); uniPrefs[0] = in.nextLine().toUpperCase();
+				System.out.println("2nd Choise: "); uniPrefs[1] = in.nextLine().toUpperCase();
+				System.out.println("3rd Choise: "); uniPrefs[2] = in.nextLine().toUpperCase();
+				student.setUniPref(uniPrefs);
+
+				student.setScore(calcScore(AnsKey, student.getAns()));
+				
+				students.add(student);
+			} catch (InputMismatchException ime) {
 
 			}
 
-		}
+			System.out.print("Add more Student?(y/n)");
+			String askNew = in.nextLine();
+			newRecord = (askNew.toLowerCase().equals("y")) ? true : false;
 
+			i++;
+
+		} while (newRecord == true);
+				
+				System.out.println("===Entered Students Details===");
+			
+		students.forEach(student -> {
+
+			System.out.println("Student Id: " + student.getSId() +
+					"   Full Name : " + student.getFnm() +
+					" " + student.getLnm() +
+					" Exam Score: " + student.getScore() +
+					" Uni. Pref.: " + student.getUniPref().toString()
+			
+					
+					// Fix array print
+		//			studentScores[i] = calculateScore(studentsList[i][1], studentsList[i][2]);
+					//System.out.println(Arrays.toString(students.toArray()));
+			);
+		});
+		
+		
+		
 		in.close();
 	}
+
+//Methods -----------------------------------------
+	
+	public static int checkAns(String key, String answer) {
+		int trueA = 0, wrongA = 0;
+		for (int i = 0; i < key.length(); i++) {
+			if (answer.charAt(i) == ' ') {
+				continue;
+			} else if (answer.charAt(i) == key.charAt(i)) {
+				trueA++;
+			} else {
+				wrongA++;
+			}
+		}
+		trueA -= (wrongA / 4);
+		
+		return trueA;
+	
+	}
+	
+	public static int calcScore(String key, String answer) {
+		int matPt, sciPt, engPt, socPt;
+			
+		matPt = 4 * checkAns(key.substring(0, 20), answer.substring(0, 20));
+		sciPt = 3 * checkAns(key.substring(20, 30), answer.substring(20, 30));
+		engPt = 2 * checkAns(key.substring(30, 50), answer.substring(30, 50));
+		socPt = 1 * checkAns(key.substring(50, 60), answer.substring(50, 60));
+		return matPt + sciPt + engPt + socPt;
+	
+	}
+	
+
+	
 
 	class Student {
 		// fields (variables in a class)
 		private int stuId;
 		private String firstName;
 		private String lastName;
-		private String quantitative;
-		private String verbal;
+		private String answers;
+		//private String verbal;
 		private String[] uniPref;
-
+		private int score;
+		
 		// Constructor method, Declaration of Class
 
 		public Student() {
@@ -178,20 +208,14 @@ public class UniEntrSys {
 			this.lastName = lName;
 		}
 
-		public String getQtt() {
-			return quantitative;
+		public String getAns() {
+
+			return answers;
 		}
 
-		public void setQtt(String qtt) {
-			quantitative = qtt;
-		}
+		public void setAns(String answers) {
+			this.answers = answers;
 
-		public String getVrb() {
-			return verbal;
-		}
-
-		public void setVrb(String vrb) {
-			verbal = vrb;
 		}
 
 		public String[] getUniPref() {
@@ -202,6 +226,14 @@ public class UniEntrSys {
 			this.uniPref = uniPref;
 		}
 
+		public int getScore() {
+			return score;
+		}
+
+		public void setScore(int score) {
+			this.score = score;
+		}
+	
 	}
 
 }

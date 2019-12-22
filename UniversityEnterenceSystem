@@ -1,12 +1,16 @@
 package StudentPlacementToUniversity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
 public class UniEntrSys3 {
-
+static String div = "-------------------------------------";
+static String ddiv = "=====================================";
+	
 	public static void main(String[] args) {
 		
 //Universities--------------------------------------------------------------------------------------------
@@ -52,9 +56,9 @@ public class UniEntrSys3 {
 		String AnsKey = qttk.concat(vrbk);
 				
 //Students-----------------------------------------------------------------------------------------	
-		System.out.println("\n\n----------------------------------------");
+		System.out.println("\n\n"+ div);
 		System.out.println("\tInput Students Details");
-		System.out.println("----------------------------------------");
+		System.out.println(div);
 		List<Student> students = new ArrayList<Student>();
 		int i = 0;
 		boolean addStu = true;
@@ -63,7 +67,7 @@ public class UniEntrSys3 {
 			student.setSId(i + 1);
 
 			System.out.println("Enter " + "\"First Name\"" + " for Student iD: " + student.getSId());
-			student.setFnm(in.nextLine());
+			student.setFnm(in.nextLine().toUpperCase());
 			System.out.println("Enter " + "\"Last Name\"" + " for Student iD: " + student.getSId());
 			student.setLnm(in.nextLine().toUpperCase());
 
@@ -74,13 +78,13 @@ public class UniEntrSys3 {
 			String stuAns = qtt.concat(vrb);
 
 			System.out.println("University choices" + " for Student iD:" + student.getSId());
-			System.out.println("(Enter 3 Letter University Codes)");
-			// System.out.println("-------------------------------------");
+			System.out.println("!Enter 3 Letter University Codes!");
+			
 			System.out.println("\nUniversity Name  \t|\tCode");
-			System.out.println("=====================================");
+			System.out.println(ddiv);
 			for (int j = 0; j < univCount; j++) {
 				System.out.println(university[j][0] + " : " + "\t|\t" + university[j][1]);
-				System.out.println("-------------------------------------");
+				System.out.println(div);
 			}
 
 			String[] uniPrefs = new String[3];
@@ -104,18 +108,28 @@ public class UniEntrSys3 {
 
 		} while (addStu == true);
 				
-		System.out.println("===Entered Students Details===");
-			
+		System.out.println("Entered Students Details");
+		System.out.printf(div+div+"\n");
+		
+// Sort Student objects for multiple fields using "comparator"; below is a lambda expression for comparator.
+// Collection sort of java uses merge sort algorithm for objects
+		
+		Collections.sort(students, Comparator.comparing(Student::getScore).reversed()
+	            .thenComparing(Student::getFnm));
+		
+		
+		System.out.printf("%-5s %-33s%-15s%-7s%-7s%-7s\n", "Id", "| Name", "| Qtt. Score", "| 1st" , "| 2nd", "| 3rd");
+		System.out.printf(ddiv+ddiv+"\n");
 		students.forEach(student -> {
-
-		System.out.println("Student Id: " + student.getSId() +
-					"   Full Name : " + student.getFnm() +
-					" " + student.getLnm() +
-					" Quat. Score: " + student.getScore() +
-					" Uni. Pref.: " + student.getUniPref()[0] + student.getUniPref()[1] + student.getUniPref()[2]
-					);
-					
-					// make a better print
+				
+		System.out.printf("%-5s %-33s%-15s%-7s%-7s%-7s\n", 
+				student.getSId(), 
+				"| "+ student.getFnm()+ " "+ student.getLnm(), 
+				"| "+ student.getScore(), 
+				"| "+ student.getUniPref()[0], 
+				"| "+ student.getUniPref()[1], 
+				"| "+ student.getUniPref()[2]);
+		System.out.printf(div+div+"\n");
 		});
 
 		in.close();

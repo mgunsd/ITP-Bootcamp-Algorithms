@@ -1,15 +1,16 @@
 package StudentPlacementToUniversity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class UniEntrSys3 {
-static String div = "-------------------------------------";
-static String ddiv = "=====================================";
+public class UniEntrSysBc05 {
+static String div = "------------------------------------------";
+static String ddv = "==========================================";
 	
 	public static void main(String[] args) {
 		
@@ -63,7 +64,7 @@ static String ddiv = "=====================================";
 		int i = 0;
 		boolean addStu = true;
 		do {
-			Student student = new UniEntrSys3().new Student();
+			Student student = new UniEntrSysBc05().new Student();
 			student.setSId(i + 1);
 
 			System.out.println("Enter " + "\"First Name\"" + " for Student iD: " + student.getSId());
@@ -81,9 +82,9 @@ static String ddiv = "=====================================";
 			System.out.println("!Enter 3 Letter University Codes!");
 			
 			System.out.println("\nUniversity Name  \t|\tCode");
-			System.out.println(ddiv);
+			System.out.println(ddv);
 			for (int j = 0; j < univCount; j++) {
-				System.out.println(university[j][0] + " : " + "\t|\t" + university[j][1]);
+				System.out.println(university[j][0] + "  " + "\t\t|\t" + university[j][1]);
 				System.out.println(div);
 			}
 
@@ -97,7 +98,7 @@ static String ddiv = "=====================================";
 			student.setUniPref(uniPrefs);
 			
 			student.setScore(calcQttScore(AnsKey, stuAns));
-			
+			student.setPlaced("Not Placed");
 			students.add(student);
 
 			System.out.print("Add more Student?(y/n)");
@@ -109,7 +110,7 @@ static String ddiv = "=====================================";
 		} while (addStu == true);
 				
 		System.out.println("Entered Students Details");
-		System.out.printf(div+div+"\n");
+		System.out.printf(ddv+ddv+"\n");
 		
 // Sort Student objects for multiple fields using "comparator"; below is a lambda expression for comparator.
 // Collection sort of java uses merge sort algorithm for objects
@@ -118,24 +119,68 @@ static String ddiv = "=====================================";
 	            .thenComparing(Student::getFnm));
 		
 		
-		System.out.printf("%-5s %-33s%-15s%-7s%-7s%-7s\n", "Id", "| Name", "| Qtt. Score", "| 1st" , "| 2nd", "| 3rd");
-		System.out.printf(ddiv+ddiv+"\n");
+		System.out.printf("%-5s %-30s%-15s%-7s%-7s%-7s%-7s\n", "Id", "| Name", "| Qtt. Score", "| 1st" , "| 2nd", "| 3rd","| Place");
+		System.out.printf(ddv+ddv+"\n");
 		students.forEach(student -> {
 				
-		System.out.printf("%-5s %-33s%-15s%-7s%-7s%-7s\n", 
+		System.out.printf("%-5s %-30s%-15s%-7s%-7s%-7s%-7s\n", 
 				student.getSId(), 
 				"| "+ student.getFnm()+ " "+ student.getLnm(), 
 				"| "+ student.getScore(), 
 				"| "+ student.getUniPref()[0], 
 				"| "+ student.getUniPref()[1], 
-				"| "+ student.getUniPref()[2]);
+				"| "+ student.getUniPref()[2],
+				"| "+ student.getPlaced());
 		System.out.printf(div+div+"\n");
 		});
-
+		System.out.println("\t == Placement Results ==");
+		System.out.printf("%-5s %-30s%-15s%-7s%-7s%-7s%-7s\n", "Id", "| Name", "| Qtt. Score", "| 1st" , "| 2nd", "| 3rd","| Place");
+		System.out.printf(ddv+ddv+"\n");
+		
+		students.forEach(student -> {
+			student.setPlaced(place(student.getUniPref(), univCount, univCapacity, university));
+		});
+		
+		students.forEach(student -> {
+			System.out.printf("%-5s %-30s%-15s%-7s%-7s%-7s%-7s\n", 
+					student.getSId(), 
+					"| "+ student.getFnm()+ " "+ student.getLnm(), 
+					"| "+ student.getScore(), 
+					"| "+ student.getUniPref()[0], 
+					"| "+ student.getUniPref()[1], 
+					"| "+ student.getUniPref()[2],
+					"| "+ student.getPlaced());
+			System.out.printf(div+div+"\n");
+		
+		});
+  		
+		
+		
+		
 		in.close();
 	}
 
 //Methods -----------------------------------------
+	static String place(String[] uniPref, int univCount, int[] uniCap, String[][] uni) {
+		String placed= null;
+		placement:
+		while (Arrays.stream(uniCap).sum() > 0 && placed == null) {
+			 for (String pr : uniPref) {
+				for (int i = 0; i < univCount; i++) {
+					if (uniCap[i] > 0) {
+						if (pr.equalsIgnoreCase(uni[i][1])) {
+							uniCap[i] -= 1;
+							placed = pr;
+							break placement;
+						}
+					}
+				}
+			}
+		}
+		return placed;
+		
+	}
+	
 	
 	public static int checkAns(String key, String answer) {
 		int correctA = 0; 
@@ -169,7 +214,7 @@ static String ddiv = "=====================================";
 		private String lastName;
 		private String[] uniPref;
 		private int score;
-		
+		private String placed;
 		// Constructor method, Declaration of Class
 
 		public Student() {
@@ -215,6 +260,16 @@ static String ddiv = "=====================================";
 
 		public void setScore(int score) {
 			this.score = score;
+		}
+		
+		public String getPlaced() {
+			
+			return placed;
+		}
+
+		public void setPlaced(String placed) {
+			
+			this.placed = placed;
 		}
 	
 	}
